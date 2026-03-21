@@ -4,11 +4,12 @@ import { supabase } from "@/integrations/supabase/client";
 import AppLayout from "@/components/AppLayout";
 import PassStatusBadge from "@/components/PassStatusBadge";
 import PassTypeBadge from "@/components/PassTypeBadge";
+import PrintablePassCard from "@/components/PrintablePassCard";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { format } from "date-fns";
-import { Search, CheckCircle2, XCircle, LogIn, LogOut } from "lucide-react";
+import { Search, CheckCircle2, XCircle, LogIn, LogOut, Printer } from "lucide-react";
 import { toast } from "sonner";
 import type { Database } from "@/integrations/supabase/types";
 
@@ -20,6 +21,7 @@ export default function PassList() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [typeFilter, setTypeFilter] = useState<string>("all");
+  const [printPass, setPrintPass] = useState<GatePass | null>(null);
 
   const { data: passes = [], isLoading } = useQuery({
     queryKey: ["gate-passes"],
@@ -67,7 +69,7 @@ export default function PassList() {
 
   return (
     <AppLayout>
-      <div className="p-6 md:p-8 max-w-6xl mx-auto space-y-6">
+      <div className="p-6 md:p-8 max-w-6xl mx-auto space-y-6 print:hidden">
         <h1 className="text-2xl font-bold">All Gate Passes</h1>
 
         <div className="flex flex-col sm:flex-row gap-3">
@@ -145,6 +147,9 @@ export default function PassList() {
                       <td className="px-4 py-3 text-muted-foreground text-xs">{format(new Date(pass.created_at), "MMM d, h:mm a")}</td>
                       <td className="px-4 py-3">
                         <div className="flex gap-1">
+                          <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs" onClick={() => setPrintPass(pass)}>
+                            <Printer className="w-3.5 h-3.5" /> Print
+                          </Button>
                           {pass.status === "pending" && (
                             <>
                               <Button size="sm" variant="ghost" className="h-7 gap-1 text-xs text-success" onClick={() => handleAction(pass, "approve")}>
@@ -175,6 +180,8 @@ export default function PassList() {
           </div>
         )}
       </div>
+
+      {printPass && <PrintablePassCard pass={printPass} onClose={() => setPrintPass(null)} />}
     </AppLayout>
   );
 }
