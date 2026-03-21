@@ -14,7 +14,84 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      gate_passes: {
+        Row: {
+          checked_in_at: string | null
+          checked_out_at: string | null
+          created_at: string
+          created_by: string | null
+          department: string | null
+          event_name: string | null
+          host_name: string | null
+          id: string
+          material_description: string | null
+          notes: string | null
+          pass_number: string
+          pass_type: Database["public"]["Enums"]["pass_type"]
+          person_company: string | null
+          person_contact: string | null
+          person_id_number: string | null
+          person_id_type: string | null
+          person_name: string
+          purpose: string
+          status: Database["public"]["Enums"]["pass_status"]
+          updated_at: string
+          valid_from: string
+          valid_until: string
+          vehicle_number: string | null
+        }
+        Insert: {
+          checked_in_at?: string | null
+          checked_out_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          department?: string | null
+          event_name?: string | null
+          host_name?: string | null
+          id?: string
+          material_description?: string | null
+          notes?: string | null
+          pass_number?: string
+          pass_type: Database["public"]["Enums"]["pass_type"]
+          person_company?: string | null
+          person_contact?: string | null
+          person_id_number?: string | null
+          person_id_type?: string | null
+          person_name: string
+          purpose: string
+          status?: Database["public"]["Enums"]["pass_status"]
+          updated_at?: string
+          valid_from?: string
+          valid_until?: string
+          vehicle_number?: string | null
+        }
+        Update: {
+          checked_in_at?: string | null
+          checked_out_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          department?: string | null
+          event_name?: string | null
+          host_name?: string | null
+          id?: string
+          material_description?: string | null
+          notes?: string | null
+          pass_number?: string
+          pass_type?: Database["public"]["Enums"]["pass_type"]
+          person_company?: string | null
+          person_contact?: string | null
+          person_id_number?: string | null
+          person_id_type?: string | null
+          person_name?: string
+          purpose?: string
+          status?: Database["public"]["Enums"]["pass_status"]
+          updated_at?: string
+          valid_from?: string
+          valid_until?: string
+          vehicle_number?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +100,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      pass_status: "pending" | "active" | "expired" | "rejected"
+      pass_type: "visitor" | "material" | "employee" | "event"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +228,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      pass_status: ["pending", "active", "expired", "rejected"],
+      pass_type: ["visitor", "material", "employee", "event"],
+    },
   },
 } as const
