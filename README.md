@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Gate Pass Hub
 
-TODO: Document your project here
+A comprehensive gate pass management system.
